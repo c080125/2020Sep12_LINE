@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chatアプリ</title>
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- コンテンツ表示画面 -->
+<div id="wrap">
+    <header>
+        <div>ロゴ</div>
+        <div></div>
+        <div>サインイン</div>
+    </header>
+    <main>
+        <div>名前：<input type="text" id="uname"></div>
+        <div>
+            <textarea id="text" cols="30" rows="10"></textarea>
+            <button id="send">送信</button>
+        </div>
+        <div id="output" style="height:300px; overflow:auto; border:1px solid #cccccc"></div>
+    </main>
+    <footer id="footer">
+        <p>copyrights 2016 Cheeese Academy Tokyo All RIghts Reserved.</p>
+    </footer>
+</div>
+<!-- div>div*3 -->
+<!-- button#sendでも可 -->
+
+
+
+
+
+
+
+
+
+<!--/ コンテンツ表示画面 -->
+
+
+
+<!-- JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- JQuery -->
+<!-- このjqueryが圧倒的に速いらしい -->
+
+<!--** 以下Firebase **-->
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.20.0/firebase.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = { // firebaseの変数
+    apiKey: "AIzaSyDeoAZL6hoXiRgQmFXUjhU2j3QxzIVBgcc", //ユニークな番号が付与される
+    authDomain: "dev17-e5901.firebaseapp.com", //ユニークな番号が付与される
+    databaseURL: "https://dev17-e5901.firebaseio.com",
+    projectId: "dev17-e5901",
+    storageBucket: "dev17-e5901.appspot.com",
+    messagingSenderId: "793608169362",
+    appId: "1:793608169362:web:dc55e2f6fb290eecb6434b"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig); //initializeAppという関数に、変数firebaseConfigを渡しているもの
+  const ref = firebase.database().ref(); 
+    // .ref()は、ユニークキーを自動で振ってくださいという意味。
+    // もし、特定のキーを付与したい場合は、.ref('book')とかにする 
+
+
+
+
+
+// 送信処理を関数化してみる: function 名前(){どういうアクションか}
+function send(){
+    let now = new Date();
+    let year = now.getFullYear();
+    let month = now.getMonth()+1;
+    let date = now.getDate();
+    let hour = now.getHours();
+    let min = now.getMinutes();
+    let sec = now.getSeconds();
+
+    const time = year+"/"+month+"/"+date+"   "+hour+":"+min+":"+sec;
+    const uname = $("#uname").val();
+    const text  = $("#text").val();
+    const msg   = {
+        uname:uname, //左側がキー名、右側が変数
+        text:text,
+        time:time
+    }; // object変数の入れ物
+    ref.push(msg);
+    $("#output").scrollTop($("#output")[0].scrollHeight);
+}
+
+
+  $("#send").on("click",function(){
+    send();
+    // setは決まったキーの付与（上書きになっちゃうって話）とpushはユニークキーの付与
+  });
+//   $().on("",function(){});
+
+// 受信処理
+ref.on("child_added",function(data){ //dataが「引数」
+    const v =   data.val(); //送信されたオブジェクトを取得
+    const k =   data.key; //ユニークキーの取得はこれ
+    const h =   '<p>'+v.uname+'<br>'+v.text+'<br>'+v.time+'</p>'; //htmlの作成, ''""でくくると文字列扱い
+    $("#output").append(h);
+    // 「,」は次がある、「.」は「〜の」
+});
+
+// イベント情報取得
+$("#text").on("keydown",function(e){ //eはただの変数名、eventのe
+    console.log(e);
+    if(e.keyCode == 13){
+        send();
+    };
+});
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
