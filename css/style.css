@@ -1,0 +1,35 @@
+#wrap {
+    width: 100%;
+    margin: auto;
+}
+main {
+    width: 80%;
+    margin: auto;
+    display: grid;
+}
+#input{
+    text-align: justify;
+    vertical-align: baseline;
+}
+#input th{
+    text-align: justify;
+    vertical-align: text-top;
+}
+#input td{
+    width: 100%;
+}
+#uname {
+    width: -webkit-fill-available;
+}
+#tname {
+    width: -webkit-fill-available;
+}
+#text {
+    width: -webkit-fill-available;
+}
+#send {
+    margin: 30px;
+}
+#random {
+    margin: 30px;
+}

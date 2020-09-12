@@ -17,11 +17,20 @@
         <div>サインイン</div>
     </header>
     <main>
-        <div>名前：<input type="text" id="uname"></div>
-        <div>
+        <table id="input">
+            <tr><th>From:</th><td><input type="text" id="uname"></td></tr>
+            <tr><th>To:</th><td> <input type="text" id="tname"></td></tr>
+            <tr><th>Feedback:</th><td><textarea id="text" cols="30" rows="10"></textarea></td></tr>
+        </table>
+        <button id="send">送信</button>
+        <button id="random">乱数発生</button>
+        <!-- <div>From: <input type="text" id="uname"></div>
+        <div>To: <input type="text" id="tname"></div>
+        <div id="fb">
+            <div>Feedback: </div>
             <textarea id="text" cols="30" rows="10"></textarea>
             <button id="send">送信</button>
-        </div>
+        </div> -->
         <div id="output" style="height:300px; overflow:auto; border:1px solid #cccccc"></div>
     </main>
     <footer id="footer">
@@ -72,10 +81,6 @@
     // .ref()は、ユニークキーを自動で振ってくださいという意味。
     // もし、特定のキーを付与したい場合は、.ref('book')とかにする 
 
-
-
-
-
 // 送信処理を関数化してみる: function 名前(){どういうアクションか}
 function send(){
     let now = new Date();
@@ -98,18 +103,46 @@ function send(){
     $("#output").scrollTop($("#output")[0].scrollHeight);
 }
 
-
   $("#send").on("click",function(){
     send();
     // setは決まったキーの付与（上書きになっちゃうって話）とpushはユニークキーの付与
   });
 //   $().on("",function(){});
 
+
+function random(){
+    let now = new Date();
+    let year = now.getFullYear();
+    let month = now.getMonth()+1;
+    let date = now.getDate();
+    let hour = now.getHours();
+    let min = now.getMinutes();
+    let sec = now.getSeconds();
+    const time = year+"/"+month+"/"+date+"   "+hour+":"+min+":"+sec;
+    const uname = "魚住純";
+    const tname = "赤木剛憲";
+    const text  = "お前に華麗なんて言葉が似合うと思うか赤木。お前は鰈だ。泥にまみれろよ";
+    const msg   = {
+        uname:uname, //左側がキー名、右側が変数
+        tname:tname,
+        text:text,
+        time:time
+    }; // object変数の入れ物
+    console.log (msg);
+    ref.push(msg);
+    $("#output").scrollTop($("#output")[0].scrollHeight);
+}
+$("#random").on("click",function(){
+    random();
+    // for(let i; i<=100; i++){
+    //     random(); 10件くらい一気にコメントさせたいけど一旦保留
+    });
+
 // 受信処理
 ref.on("child_added",function(data){ //dataが「引数」
     const v =   data.val(); //送信されたオブジェクトを取得
     const k =   data.key; //ユニークキーの取得はこれ
-    const h =   '<p>'+v.uname+'<br>'+v.text+'<br>'+v.time+'</p>'; //htmlの作成, ''""でくくると文字列扱い
+    const h =   '<p>'+v.time+'<br>'+v.tname+'<br>'+v.text+'<br>'+v.uname+'</p>'; //htmlの作成, ''""でくくると文字列扱い
     $("#output").append(h);
     // 「,」は次がある、「.」は「〜の」
 });
