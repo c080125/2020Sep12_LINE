@@ -31,10 +31,18 @@
             <textarea id="text" cols="30" rows="10"></textarea>
             <button id="send">送信</button>
         </div> -->
-        <div id="output" style="height:300px; overflow:auto; border:1px solid #cccccc"></div>
+        <div style="height:350px; overflow:auto; border:1px solid #cccccc">
+            <p id="opbox">
+            </p>
+        </div>
+        <!-- divからtableに変えてみる -->
+        <!-- <div id="opbox" style="height:200px; overflow:auto; border:1px solid #cccccc">
+            <div id="output"></div>
+            <div id="response"></div>
+        </div> -->
     </main>
     <footer id="footer">
-        <p>copyrights 2016 Cheeese Academy Tokyo All RIghts Reserved.</p>
+        <p>copyrights 2020 ひまえだ All Rights Reserved.</p>
     </footer>
 </div>
 <!-- div>div*3 -->
@@ -93,18 +101,24 @@ function send(){
 
     const time = year+"/"+month+"/"+date+"   "+hour+":"+min+":"+sec;
     const uname = $("#uname").val();
+    const tname = $("#tname").val();
     const text  = $("#text").val();
     const msg   = {
         uname:uname, //左側がキー名、右側が変数
+        tname:tname,
         text:text,
         time:time
     }; // object変数の入れ物
     ref.push(msg);
-    $("#output").scrollTop($("#output")[0].scrollHeight);
+        
 }
 
   $("#send").on("click",function(){
     send();
+    $("#uname").val("");
+    $("#tname").val("");
+    $("#text").val("");
+    $("#opbox").scrollTop($("#opbox")[0].scrollHeight);
     // setは決まったキーの付与（上書きになっちゃうって話）とpushはユニークキーの付与
   });
 //   $().on("",function(){});
@@ -130,10 +144,11 @@ function random(){
     }; // object変数の入れ物
     console.log (msg);
     ref.push(msg);
-    $("#output").scrollTop($("#output")[0].scrollHeight);
+    $("#opbox").scrollTop($("#opbox")[0].scrollHeight);
 }
 $("#random").on("click",function(){
     random();
+    $("#opbox").scrollTop($("#opbox")[0].scrollHeight);
     // for(let i; i<=100; i++){
     //     random(); 10件くらい一気にコメントさせたいけど一旦保留
     });
@@ -142,8 +157,18 @@ $("#random").on("click",function(){
 ref.on("child_added",function(data){ //dataが「引数」
     const v =   data.val(); //送信されたオブジェクトを取得
     const k =   data.key; //ユニークキーの取得はこれ
-    const h =   '<p>'+v.time+'<br>'+v.tname+'<br>'+v.text+'<br>'+v.uname+'</p>'; //htmlの作成, ''""でくくると文字列扱い
-    $("#output").append(h);
+    const h =   '<p id="output">'+v.time+'<br>'+v.tname+'<br>'+v.text+'<br>'+v.uname+'</p>'; //htmlの作成, ''""でくくると文字列扱い
+    $("#opbox").append(h);
+    // $("#output").append(h);
+    // 「,」は次がある、「.」は「〜の」
+});
+
+ref.on("child_added",function(){ //dataが「引数」
+    // const v =   data.val(); //送信されたオブジェクトを取得
+    // const k =   data.key; //ユニークキーの取得はこれ
+    const h =   '<p id="response">2020/09/15</p>'; //htmlの作成, ''""でくくると文字列扱い
+    $("#opbox").append(h);
+    // $("#response").append(h);
     // 「,」は次がある、「.」は「〜の」
 });
 
