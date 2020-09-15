@@ -31,7 +31,8 @@
             <textarea id="text" cols="30" rows="10"></textarea>
             <button id="send">送信</button>
         </div> -->
-        <div style="height:350px; overflow:auto; border:1px solid #cccccc">
+        <div style="height:350px; overflow:auto; 
+        margin-bottom:30px; border:1px solid #cccccc">
             <p id="opbox">
             </p>
         </div>
@@ -144,7 +145,7 @@ function random(){
     }; // object変数の入れ物
     console.log (msg);
     ref.push(msg);
-    $("#opbox").scrollTop($("#opbox")[0].scrollHeight);
+    // $("#opbox").scrollTop($("#opbox")[0].scrollHeight);
 }
 $("#random").on("click",function(){
     random();
@@ -159,6 +160,7 @@ ref.on("child_added",function(data){ //dataが「引数」
     const k =   data.key; //ユニークキーの取得はこれ
     const h =   '<p id="output">'+v.time+'<br>'+v.tname+'<br>'+v.text+'<br>'+v.uname+'</p>'; //htmlの作成, ''""でくくると文字列扱い
     $("#opbox").append(h);
+    // $("#opbox").scrollTop($("#opbox")[0].scrollHeight);
     // $("#output").append(h);
     // 「,」は次がある、「.」は「〜の」
 });
@@ -168,6 +170,7 @@ ref.on("child_added",function(){ //dataが「引数」
     // const k =   data.key; //ユニークキーの取得はこれ
     const h =   '<p id="response">2020/09/15</p>'; //htmlの作成, ''""でくくると文字列扱い
     $("#opbox").append(h);
+    // $("#opbox").scrollTop($("#opbox")[0].scrollHeight);
     // $("#response").append(h);
     // 「,」は次がある、「.」は「〜の」
 });
@@ -180,6 +183,10 @@ $("#text").on("keydown",function(e){ //eはただの変数名、eventのe
     };
 });
 
+// お疲れっていう機能
+// 安西先生に、「諦めたらそこで試合終了ですよ」って行ってもらうボット
+// http://www.shurey.com/js/samples/1_tips10.html
+// ↑window.innerHeightを取得して、入力フォームと表示フォームの高さを可変にする。
 
 
 
