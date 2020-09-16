@@ -22,8 +22,15 @@
             <tr><th>To:</th><td> <input type="text" id="tname"></td></tr>
             <tr><th>Feedback:</th><td><textarea id="text" cols="30" rows="10"></textarea></td></tr>
         </table>
-        <button id="send">送信</button>
-        <button id="random">乱数発生</button>
+        <div class="icons">
+            <div class="imgs" data-img="0"><img class="img" src="imgs/buke.png" alt=""></div>
+            <div class="imgs" data-img="1"><img  class="img" src="imgs/caram.png" alt=""></div>
+            <div class="imgs" data-img="2"><img  class="img" src="imgs/tuku.jpg" alt=""></div>
+        </div>
+        <div class="btn">
+            <button id="send">送信</button>
+            <button id="random">乱数発生</button>    
+        </div>
         <!-- <div>From: <input type="text" id="uname"></div>
         <div>To: <input type="text" id="tname"></div>
         <div id="fb">
@@ -90,6 +97,13 @@
     // .ref()は、ユニークキーを自動で振ってくださいという意味。
     // もし、特定のキーを付与したい場合は、.ref('book')とかにする 
 
+// 画像処理を追加する
+let d = 0;
+const img = ["buke.png", "caram.png", "tuku.jpg"];
+$(".imgs").on("click",function(){
+    d=$(this).attr("img");
+});
+
 // 送信処理を関数化してみる: function 名前(){どういうアクションか}
 function send(){
     let now = new Date();
@@ -108,7 +122,8 @@ function send(){
         uname:uname, //左側がキー名、右側が変数
         tname:tname,
         text:text,
-        time:time
+        time:time,
+        icon:d
     }; // object変数の入れ物
     ref.push(msg);
         
@@ -158,7 +173,7 @@ $("#random").on("click",function(){
 ref.on("child_added",function(data){ //dataが「引数」
     const v =   data.val(); //送信されたオブジェクトを取得
     const k =   data.key; //ユニークキーの取得はこれ
-    const h =   '<p id="output">'+v.time+'<br>'+v.tname+'<br>'+v.text+'<br>'+v.uname+'</p>'; //htmlの作成, ''""でくくると文字列扱い
+    const h =   '<p id="output"><img scr="imgs/'+img[v.icon]+'"><br>'+v.time+'<br>'+v.tname+'<br>'+v.text+'<br>'+v.uname+'</p>'; //htmlの作成, ''""でくくると文字列扱い
     $("#opbox").append(h);
     // $("#opbox").scrollTop($("#opbox")[0].scrollHeight);
     // $("#output").append(h);

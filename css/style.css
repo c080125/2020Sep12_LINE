@@ -1,15 +1,14 @@
 #wrap {
-    width: 100%;
+    max-width: 100%;
     min-height: 100vh;
     margin: auto;
     position: relative;
 }
 main {
-    width: 80%;
     padding-top: 30px;
     padding-bottom: 30px;
+    width: 75%;
     margin: auto;
-    display: grid;
 }
 header {
     height: 30px;
@@ -31,6 +30,14 @@ header {
 #input td{
     width: 100%;
 }
+.icons {
+    display: flex;
+    justify-content: space-between;
+}
+.img {
+    width: 50px;
+    height: 50px;
+}
 #uname {
     width: -webkit-fill-available;
 }
@@ -40,11 +47,21 @@ header {
 #text {
     width: -webkit-fill-available;
 }
+.btn{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+}
 #send {
     margin: 30px;
+    width: 160px;
+    height: 40px;
 }
 #random {
     margin: 30px;
+    width: 160px;
+    height: 40px;
 }
 #opbox {
     width: auto;
