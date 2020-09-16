@@ -11,12 +11,12 @@
 
 <!-- コンテンツ表示画面 -->
 <div id="wrap">
-    <header>
+    <div id="header">
         <div>ロゴ</div>
         <div></div>
         <div>サインイン</div>
-    </header>
-    <main>
+    </div>
+    <main id="main">
         <table id="input">
             <tr><th>From:</th><td><input type="text" id="uname"></td></tr>
             <tr><th>To:</th><td> <input type="text" id="tname"></td></tr>
@@ -38,9 +38,9 @@
             <textarea id="text" cols="30" rows="10"></textarea>
             <button id="send">送信</button>
         </div> -->
-        <div style="height:350px; overflow:auto; 
+        <div id="opbox" style="height:350px; overflow:auto; 
         margin-bottom:30px; border:1px solid #cccccc">
-            <p id="opbox">
+            <p id="output">
             </p>
         </div>
         <!-- divからtableに変えてみる -->
@@ -134,8 +134,8 @@ function send(){
     $("#uname").val("");
     $("#tname").val("");
     $("#text").val("");
-    $("#opbox").scrollTop($("#opbox")[0].scrollHeight);
     // setは決まったキーの付与（上書きになっちゃうって話）とpushはユニークキーの付与
+    // 一定以上のheightのボックスじゃないと、スクロールがワークしない。
   });
 //   $().on("",function(){});
 
@@ -185,6 +185,8 @@ ref.on("child_added",function(){ //dataが「引数」
     // const k =   data.key; //ユニークキーの取得はこれ
     const h =   '<p id="response">2020/09/15</p>'; //htmlの作成, ''""でくくると文字列扱い
     $("#opbox").append(h);
+    $("#main").scrollTop($("#main")[0].scrollHeight);
+    $("#opbox").scrollTop($("#opbox")[0].scrollHeight);
     // $("#opbox").scrollTop($("#opbox")[0].scrollHeight);
     // $("#response").append(h);
     // 「,」は次がある、「.」は「〜の」
